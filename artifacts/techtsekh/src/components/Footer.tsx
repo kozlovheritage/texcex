@@ -1,5 +1,5 @@
 import React from 'react';
-import logoDark from '@assets/02-horizontal-dark_1_1778578198116.png';
+import markDark from '@assets/08-mark-dark_1_1778578589277.png';
 
 const legalLinks = [
   { label: 'Реквизиты', href: '#' },
@@ -20,16 +20,20 @@ export default function Footer() {
       <div className="container mx-auto px-6 py-12 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
 
-          {/* Brand logo — dark horizontal PNG, rounded + soft border for contrast */}
+          {/* Brand — mark icon + wordmark side by side */}
           <div className="flex flex-col gap-3">
-            <div className="inline-block rounded-xl overflow-hidden border border-white/10 w-fit shadow-sm shadow-black/20">
+            <div className="flex items-center gap-3">
               <img
-                src={logoDark}
-                alt="ТЕХЦЕХ"
-                className="h-14 w-auto object-contain block"
+                src={markDark}
+                alt=""
+                aria-hidden
+                className="h-10 w-10 rounded-lg object-cover flex-shrink-0"
               />
+              <span className="font-heading font-bold text-2xl text-white tracking-tight">
+                ТЕХЦЕХ
+              </span>
             </div>
-            <span className="text-xs font-body text-white/25 mt-1">ИП Козлов Андрей Олегович</span>
+            <span className="text-xs font-body text-white/25">ИП Козлов Андрей Олегович</span>
           </div>
 
           {/* Legal links */}
@@ -49,7 +53,7 @@ export default function Footer() {
             ))}
           </div>
 
-          {/* Contacts — plain text links */}
+          {/* Contacts */}
           <div className="flex flex-col gap-3">
             <span className="text-xs font-mono text-white/30 uppercase tracking-widest mb-1">Связаться</span>
             {contacts.map((c) => (
