@@ -26,25 +26,25 @@
 
 :root {
   /* Colors */
-  --bg-primary: 216 25% 97%; /* #F5F7FA */
-  --bg-secondary: 216 19% 90%; /* #E1E5EB */
-  --bg-dark: 220 21% 11%; /* #161A22 */
+  --bg-primary: 216 25% 97%;
+  --bg-secondary: 216 19% 90%;
+  --bg-dark: 220 21% 11%;
   
-  --accent-blue: 215 51% 25%; /* #1F3A5F */
-  --accent-warm: 41 46% 51%; /* #B8964A */
+  --accent-blue: 215 51% 25%;
+  --accent-warm: 41 46% 51%;
   
-  --text-primary: 220 15% 12%; /* #1A1D23 */
-  --text-secondary: 222 9% 39%; /* #5A5F6B */
-  --text-light: 0 0% 100%; /* #FFFFFF */
+  --text-primary: 220 15% 12%;
+  --text-secondary: 222 9% 39%;
+  --text-light: 0 0% 100%;
   
-  --footer-bg: 225 21% 7%; /* #0F1117 */
+  --footer-bg: 225 21% 7%;
 
   /* Fonts */
   --font-heading: 'Space Grotesk', sans-serif;
   --font-body: 'IBM Plex Sans', sans-serif;
   --font-mono-stack: 'JetBrains Mono', monospace;
 
-  /* Aliases for shadcn components */
+  /* shadcn aliases */
   --background: var(--bg-primary);
   --foreground: var(--text-primary);
   --border: var(--bg-secondary);
@@ -92,6 +92,42 @@
   }
 }
 
+/* ─── Circuit trace pulse animation ─── */
+@keyframes tracePulse {
+  0%   { stroke-dashoffset: 600; opacity: 0; }
+  8%   { opacity: 0.9; }
+  85%  { opacity: 0.7; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+@keyframes traceLoop {
+  0%   { stroke-dashoffset: 600; opacity: 0; }
+  5%   { opacity: 1; }
+  90%  { opacity: 0.6; }
+  100% { stroke-dashoffset: -600; opacity: 0; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.25; transform: scale(1); }
+  50%       { opacity: 0.55; transform: scale(1.08); }
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes scanLine {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+@keyframes fadeInUp {
+  0%   { opacity: 0; transform: translateY(24px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Utility classes ─── */
 @layer utilities {
   .glass-card {
     background: rgba(255, 255, 255, 0.6);
@@ -102,21 +138,34 @@
   
   .glass-card:hover {
     border-color: hsl(var(--accent-blue));
-    box-shadow: 0 0 15px rgba(31, 58, 95, 0.1);
+    box-shadow: 0 0 20px rgba(31, 58, 95, 0.12), 0 8px 32px rgba(31, 58, 95, 0.08);
     transform: translateY(-4px);
   }
 
   .glass-card-dark {
     background: rgba(22, 26, 34, 0.7);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     transition: all 0.3s ease;
   }
 
   .glass-card-dark:hover {
     border-color: hsl(var(--accent-warm));
-    box-shadow: 0 0 15px rgba(184, 150, 74, 0.15);
+    box-shadow: 0 0 20px rgba(184, 150, 74, 0.18), 0 8px 32px rgba(184, 150, 74, 0.08);
     transform: translateY(-4px);
+  }
+
+  .glow-pulse {
+    animation: glowPulse 4s ease-in-out infinite;
+  }
+
+  .float-y {
+    animation: floatY 6s ease-in-out infinite;
+  }
+
+  .trace-animate {
+    stroke-dasharray: 600;
+    animation: traceLoop 6s linear infinite;
   }
 
   .text-gradient {

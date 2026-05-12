@@ -1,22 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-function LogoMark({ color = 'hsl(var(--accent-blue))' }: { color?: string }) {
-  return (
-    <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="2" y="2" width="36" height="36" rx="4" stroke={color} strokeWidth="2" fill="none" />
-      <path
-        d="M13 13 L13 20 L20 20"
-        stroke="hsl(var(--accent-warm))"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-      <circle cx="13" cy="13" r="2" fill="hsl(var(--accent-warm))" />
-    </svg>
-  );
-}
+import { LogoMark } from './LogoMark';
 
 const navLinks = [
   { name: 'Для кого', href: '#for-whom' },
@@ -41,23 +25,18 @@ export default function Navbar() {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ delay: 2.2, duration: 0.6 }}
+      transition={{ delay: 2.2, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        scrolled
-          ? 'backdrop-blur-md border-b border-[hsl(var(--bg-secondary))]'
-          : 'bg-transparent'
+        scrolled ? 'border-b border-[hsl(var(--bg-secondary))]' : 'bg-transparent'
       }`}
-      style={scrolled ? { background: 'rgba(245,247,250,0.85)' } : {}}
+      style={scrolled ? { background: 'rgba(245,247,250,0.88)', backdropFilter: 'blur(14px)' } : {}}
     >
       <div className="container mx-auto px-6 h-20 flex items-center justify-between">
-        <a href="#hero" className="flex items-center gap-2.5 group" data-testid="link-nav-logo">
-          <LogoMark />
-          <span className="font-heading font-bold text-xl text-[hsl(var(--accent-blue))] tracking-tight">
-            ТЕХЦЕХ
-          </span>
+        <a href="#hero" data-testid="link-nav-logo" className="group">
+          <LogoMark variant="light" size={34} textSize="text-xl" />
         </a>
 
-        {/* Desktop nav */}
+        {/* Desktop */}
         <div className="hidden md:flex items-center gap-8">
           <ul className="flex items-center gap-6">
             {navLinks.map((link) => (
@@ -65,7 +44,7 @@ export default function Navbar() {
                 <a
                   href={link.href}
                   data-testid={`link-nav-${link.name.toLowerCase()}`}
-                  className="text-sm font-medium text-[hsl(var(--text-secondary))] hover:text-[hsl(var(--accent-blue))] transition-colors"
+                  className="text-sm font-medium text-[hsl(var(--text-secondary))] hover:text-[hsl(var(--accent-blue))] transition-colors relative after:absolute after:bottom-[-2px] after:left-0 after:w-0 after:h-[1px] after:bg-[hsl(var(--accent-warm))] after:transition-all hover:after:w-full"
                 >
                   {link.name}
                 </a>
@@ -75,7 +54,7 @@ export default function Navbar() {
           <a
             href="#cta"
             data-testid="button-nav-cta"
-            className="px-5 py-2.5 bg-[hsl(var(--accent-blue))] text-white text-sm font-medium rounded hover:bg-[#2B4F7F] transition-colors"
+            className="px-5 py-2.5 bg-[hsl(var(--accent-blue))] text-white text-sm font-medium rounded hover:bg-[#2B4F7F] transition-all hover:-translate-y-0.5 shadow-md shadow-[hsl(var(--accent-blue))]/20"
           >
             Рассчитать проект
           </a>
@@ -88,9 +67,9 @@ export default function Navbar() {
           aria-label="Меню"
           data-testid="button-nav-mobile"
         >
-          <span className={`w-6 h-0.5 bg-[hsl(var(--accent-blue))] transition-all ${mobileOpen ? 'rotate-45 translate-y-2' : ''}`} />
-          <span className={`w-6 h-0.5 bg-[hsl(var(--accent-blue))] transition-all ${mobileOpen ? 'opacity-0' : ''}`} />
-          <span className={`w-6 h-0.5 bg-[hsl(var(--accent-blue))] transition-all ${mobileOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+          <span className={`w-6 h-0.5 bg-[hsl(var(--accent-blue))] transition-all duration-300 ${mobileOpen ? 'rotate-45 translate-y-2' : ''}`} />
+          <span className={`w-6 h-0.5 bg-[hsl(var(--accent-blue))] transition-all duration-300 ${mobileOpen ? 'opacity-0' : ''}`} />
+          <span className={`w-6 h-0.5 bg-[hsl(var(--accent-blue))] transition-all duration-300 ${mobileOpen ? '-rotate-45 -translate-y-2' : ''}`} />
         </button>
       </div>
 
@@ -103,18 +82,21 @@ export default function Navbar() {
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="md:hidden overflow-hidden border-t border-[hsl(var(--bg-secondary))]"
-            style={{ background: 'rgba(245,247,250,0.97)', backdropFilter: 'blur(12px)' }}
+            style={{ background: 'rgba(245,247,250,0.97)', backdropFilter: 'blur(14px)' }}
           >
             <div className="container mx-auto px-6 py-6 flex flex-col gap-4">
-              {navLinks.map((link) => (
-                <a
+              {navLinks.map((link, i) => (
+                <motion.a
                   key={link.name}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
+                  initial={{ opacity: 0, x: -12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 }}
                   className="text-base font-medium text-[hsl(var(--text-primary))] hover:text-[hsl(var(--accent-blue))] transition-colors py-1"
                 >
                   {link.name}
-                </a>
+                </motion.a>
               ))}
               <a
                 href="#cta"

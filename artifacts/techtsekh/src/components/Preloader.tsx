@@ -1,54 +1,61 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { LogoIcon } from './LogoMark';
 
 export default function Preloader() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
+    const timer = setTimeout(() => setIsLoading(false), 2200);
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <AnimatePresence>
       {isLoading && (
-        <motion.div 
-          initial={{ y: 0 }}
-          exit={{ y: '-100%' }}
-          transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[hsl(var(--bg-dark))]"
+        <motion.div
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0, y: '-4%' }}
+          transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
+          className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-6"
+          style={{ background: 'hsl(var(--bg-dark))' }}
         >
-          <div className="relative flex items-center justify-center w-32 h-32">
+          {/* Animated logo assembly */}
+          <motion.div
+            initial={{ scale: 0.7, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <LogoIcon size={80} squareColor="white" />
+          </motion.div>
+
+          {/* Wordmark */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.55 }}
+            className="flex flex-col items-center gap-1"
+          >
+            <span className="font-heading font-bold text-4xl text-white tracking-tight">ТЕХЦЕХ</span>
+            <span className="text-xs font-body tracking-[0.14em] text-white/40 uppercase">Технический отдел для вашего бизнеса</span>
+          </motion.div>
+
+          {/* Loading bar */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8 }}
+            className="absolute bottom-12 left-1/2 -translate-x-1/2 w-32 h-0.5 rounded-full overflow-hidden"
+            style={{ background: 'rgba(255,255,255,0.1)' }}
+          >
             <motion.div
-              initial={{ x: -50, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="absolute w-8 h-8 border-2 border-[hsl(var(--accent-warm))] transform rotate-45"
-              style={{ left: '20px' }}
+              initial={{ x: '-100%' }}
+              animate={{ x: '100%' }}
+              transition={{ duration: 1.2, delay: 0.9, ease: 'easeInOut' }}
+              className="h-full w-full rounded-full"
+              style={{ background: 'hsl(var(--accent-warm))' }}
             />
-            <motion.div
-              initial={{ y: -50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="absolute w-8 h-8 border-2 border-[hsl(var(--accent-warm))] transform rotate-45"
-              style={{ top: '20px' }}
-            />
-            <motion.div
-              initial={{ x: 50, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-              className="absolute w-8 h-8 bg-[hsl(var(--accent-warm))] transform rotate-45"
-              style={{ right: '20px' }}
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: [0, 1, 0], scale: [0.8, 1.2, 1] }}
-              transition={{ duration: 0.8, delay: 1 }}
-              className="absolute inset-0 bg-[hsl(var(--accent-warm))] blur-xl opacity-20"
-            />
-          </div>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>

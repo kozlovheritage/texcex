@@ -1,5 +1,6 @@
 import React from 'react';
 import { SiTelegram } from 'react-icons/si';
+import { LogoMark } from './LogoMark';
 
 function MaxIcon() {
   return (
@@ -10,10 +11,10 @@ function MaxIcon() {
 }
 
 const legalLinks = [
-  { label: 'Реквизиты', href: '#' },
+  { label: 'Реквизиты', href: '#', title: '' },
   { label: 'ПОПД', href: '#', title: 'Политика обработки персональных данных' },
-  { label: 'Согласие на обработку ПД', href: '#' },
-  { label: 'Согласие на рассылку', href: '#' },
+  { label: 'Согласие на обработку ПД', href: '#', title: '' },
+  { label: 'Согласие на рассылку', href: '#', title: '' },
 ];
 
 const socials = [
@@ -45,16 +46,9 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
           {/* Brand */}
           <div className="flex flex-col gap-3">
-            <div className="flex items-center gap-2">
-              <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="2" y="2" width="36" height="36" rx="4" stroke="white" strokeWidth="2" fill="none" />
-                <path d="M13 13 L13 20 L20 20" stroke="hsl(var(--accent-warm))" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                <circle cx="13" cy="13" r="2" fill="hsl(var(--accent-warm))" />
-              </svg>
-              <span className="font-heading font-bold text-2xl text-white tracking-tight">ТЕХЦЕХ</span>
-            </div>
-            <span className="text-sm font-body text-white/40">Технический отдел для вашего бизнеса</span>
-            <span className="text-xs font-body text-white/30 mt-1">ИП Козлов Андрей Олегович</span>
+            <LogoMark variant="dark" size={32} textSize="text-2xl" />
+            <span className="text-sm font-body text-white/40 mt-1">Технический отдел для вашего бизнеса</span>
+            <span className="text-xs font-body text-white/25">ИП Козлов Андрей Олегович</span>
           </div>
 
           {/* Legal links */}
@@ -66,7 +60,7 @@ export default function Footer() {
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                title={link.title}
+                title={link.title || undefined}
                 data-testid={`link-footer-${link.label.toLowerCase().replace(/\s+/g, '-')}`}
                 className="text-sm font-body text-white/50 hover:text-[hsl(var(--accent-warm))] transition-colors w-fit"
               >
