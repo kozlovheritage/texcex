@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import markDark from '@assets/08-mark-dark_1_1778575188506.png';
+import { LogoIcon } from './LogoMark';
 
 export default function Preloader() {
   const [isLoading, setIsLoading] = useState(true);
@@ -20,19 +20,13 @@ export default function Preloader() {
           className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-6"
           style={{ background: 'hsl(var(--bg-dark))' }}
         >
-          {/* Mark from brand identity — clipped to rounded square */}
+          {/* Pure SVG mark — no PNG edges */}
           <motion.div
             initial={{ scale: 0.7, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="rounded-2xl overflow-hidden"
-            style={{ width: 80, height: 80 }}
           >
-            <img
-              src={markDark}
-              alt="ТЕХЦЕХ"
-              className="w-full h-full object-cover"
-            />
+            <LogoIcon size={80} squareColor="rgba(255,255,255,0.9)" />
           </motion.div>
 
           {/* Wordmark */}
@@ -43,7 +37,9 @@ export default function Preloader() {
             className="flex flex-col items-center gap-1"
           >
             <span className="font-heading font-bold text-4xl text-white tracking-tight">ТЕХЦЕХ</span>
-            <span className="text-xs font-body tracking-[0.14em] text-white/40 uppercase">Технический отдел для вашего бизнеса</span>
+            <span className="text-xs font-body tracking-[0.14em] text-white/40 uppercase">
+              Технический отдел для вашего бизнеса
+            </span>
           </motion.div>
 
           {/* Loading bar */}

@@ -85,11 +85,18 @@
   body {
     @apply font-sans antialiased text-foreground bg-background;
     font-family: var(--font-body);
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
     letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 }
 

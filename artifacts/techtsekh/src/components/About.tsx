@@ -1,112 +1,77 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import macbookMockup from '@assets/image_1778577162416.png';
+import iphoneMockup from '@assets/image_1778577180477.png';
 import wallpaperDesktop from '@assets/13-wallpaper-desktop-light_1_1778575971489.png';
 import wallpaperPhone from '@assets/16-wallpaper-iphone-dark_1_1778575971491.png';
 
-/* MacBook + iPhone device mockup showing brand wallpapers */
+/*
+  Device mockups using the provided PNG frames.
+
+  MacBook: wallpaper behind + frame on top with mix-blend-mode: multiply
+    → white screen area becomes transparent, black bezels stay black.
+
+  iPhone: frame as base + wallpaper absolutely positioned over the screen area
+    with mix-blend-mode: screen → dark screen area shows wallpaper.
+*/
 function DeviceMockup() {
   return (
-    <div className="relative w-full flex items-end justify-center gap-6 select-none" style={{ height: 420 }}>
-
-      {/* MacBook */}
-      <div className="relative flex flex-col items-center" style={{ width: 340 }}>
-        {/* Screen */}
-        <div
-          className="relative rounded-t-xl overflow-hidden shadow-2xl shadow-[#0B2B5E]/25"
+    <div
+      className="relative w-full flex items-end justify-center gap-4 select-none"
+      style={{ height: 420 }}
+    >
+      {/* ── MacBook ── */}
+      <div className="relative flex-shrink-0" style={{ width: 320 }}>
+        {/* Wallpaper sits behind the frame, sized to match the screen hole */}
+        <img
+          src={wallpaperDesktop}
+          alt=""
+          aria-hidden
+          className="absolute object-cover"
           style={{
-            width: 340,
-            height: 212,
-            background: '#1a1a1a',
-            border: '8px solid #2a2a2a',
-            borderBottom: 'none',
-            borderRadius: '12px 12px 0 0',
-          }}
-        >
-          {/* Camera notch */}
-          <div
-            className="absolute top-2 left-1/2 -translate-x-1/2 z-10 rounded-full"
-            style={{ width: 6, height: 6, background: '#444' }}
-          />
-          {/* Wallpaper */}
-          <img
-            src={wallpaperDesktop}
-            alt="ТЕХЦЕХ desktop wallpaper"
-            className="w-full h-full object-cover"
-          />
-        </div>
-        {/* Hinge / chin */}
-        <div
-          style={{
-            width: 340,
-            height: 10,
-            background: 'linear-gradient(to bottom, #2a2a2a, #1a1a1a)',
-            borderRadius: '0 0 2px 2px',
+            top: '3.2%',
+            left: '8%',
+            width: '84%',
+            height: '57%',
+            zIndex: 0,
           }}
         />
-        {/* Base */}
-        <div
-          style={{
-            width: 370,
-            height: 14,
-            background: 'linear-gradient(to bottom, #d0d0d0, #b8b8b8)',
-            borderRadius: '0 0 8px 8px',
-            boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
-          }}
-        >
-          {/* Trackpad hint */}
-          <div
-            className="mx-auto mt-2 rounded"
-            style={{ width: 80, height: 6, background: 'rgba(0,0,0,0.1)' }}
-          />
-        </div>
-        {/* Base shadow */}
-        <div
-          className="rounded-full"
-          style={{
-            width: 400,
-            height: 6,
-            background: 'rgba(0,0,0,0.12)',
-            filter: 'blur(8px)',
-            marginTop: 2,
-          }}
+        {/* MacBook frame on top — multiply makes white screen transparent */}
+        <img
+          src={macbookMockup}
+          alt="MacBook с обоями ТЕХЦЕХ"
+          className="relative w-full drop-shadow-2xl"
+          style={{ zIndex: 1, mixBlendMode: 'multiply' }}
         />
       </div>
 
-      {/* iPhone */}
+      {/* ── iPhone ── */}
       <div
-        className="relative rounded-[36px] overflow-hidden shadow-2xl shadow-[#0B2B5E]/30 flex-shrink-0"
-        style={{
-          width: 100,
-          height: 210,
-          background: '#111',
-          border: '6px solid #2a2a2a',
-          marginBottom: 14,
-        }}
+        className="relative flex-shrink-0"
+        style={{ width: 110, marginBottom: 24 }}
       >
-        {/* Dynamic Island */}
-        <div
-          className="absolute top-2.5 left-1/2 -translate-x-1/2 z-10 rounded-full"
-          style={{ width: 28, height: 8, background: '#000' }}
+        {/* iPhone frame as base */}
+        <img
+          src={iphoneMockup}
+          alt="iPhone с обоями ТЕХЦЕХ"
+          className="relative w-full drop-shadow-2xl"
+          style={{ zIndex: 2, position: 'relative' }}
         />
-        {/* Side button */}
-        <div
-          className="absolute rounded-r"
-          style={{ right: -8, top: 48, width: 3, height: 28, background: '#333' }}
-        />
-        {/* Volume buttons */}
-        <div
-          className="absolute rounded-l"
-          style={{ left: -8, top: 40, width: 3, height: 20, background: '#333' }}
-        />
-        <div
-          className="absolute rounded-l"
-          style={{ left: -8, top: 66, width: 3, height: 20, background: '#333' }}
-        />
-        {/* Wallpaper */}
+        {/* Wallpaper over the screen — screen blend makes the black screen show the wallpaper */}
         <img
           src={wallpaperPhone}
-          alt="ТЕХЦЕХ iPhone wallpaper"
-          className="w-full h-full object-cover"
+          alt=""
+          aria-hidden
+          className="absolute object-cover"
+          style={{
+            top: '5%',
+            left: '4.5%',
+            width: '91%',
+            height: '88%',
+            zIndex: 3,
+            mixBlendMode: 'screen',
+            borderRadius: '14px',
+          }}
         />
       </div>
     </div>
@@ -141,11 +106,16 @@ export default function About() {
             </h2>
             <div className="space-y-6 text-[hsl(var(--text-secondary))] font-body text-lg leading-relaxed">
               <p>
-                Мы не просто пишем код — мы создаём механизмы, которые приносят прибыль.
-                Понимаем бизнес-метрики, конверсии и воронки продаж так же хорошо, как архитектуру сервисов и надёжность инфраструктуры.
+                Мы не просто пишем код — мы создаём механизмы, которые
+                приносят прибыль. Понимаем бизнес-метрики, конверсии и
+                воронки продаж так же хорошо, как архитектуру сервисов
+                и надёжность инфраструктуры.
               </p>
               <p>
-                Наша команда — это технический отдел, который не нужно нанимать в штат. Мы забираем на себя всю цифровую часть: от первого экрана до сложных интеграций — чтобы вы могли фокусироваться на продукте и маркетинге.
+                Наша команда — это технический отдел, который не нужно
+                нанимать в штат. Мы забираем на себя всю цифровую часть:
+                от первого экрана до сложных интеграций — чтобы вы могли
+                фокусироваться на продукте и маркетинге.
               </p>
             </div>
 

@@ -124,7 +124,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, delay: 2.45, ease: [0.22, 1, 0.36, 1] }}
-            className="text-5xl md:text-6xl lg:text-[64px] font-bold font-heading text-[#0B2B5E] leading-[1.08] mb-6"
+            className="text-4xl md:text-5xl lg:text-[52px] font-bold font-heading text-[#0B2B5E] leading-[1.1] mb-6"
           >
             Сайты, боты и рассылки,{' '}
             которые{' '}
