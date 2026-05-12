@@ -1,5 +1,5 @@
 import React from 'react';
-import logoDark from '@assets/04-horizontal-nodesc-dark_1_1778576050013.png';
+import logoLight from '@/assets/logo-light-nobg.png';
 
 const legalLinks = [
   { label: 'Реквизиты', href: '#' },
@@ -22,10 +22,9 @@ export default function Footer() {
           {/* Brand — use screen blend mode so the dark PNG background disappears on dark footer */}
           <div className="flex flex-col gap-3">
             <img
-              src={logoDark}
+              src={logoLight}
               alt="ТЕХЦЕХ"
               className="h-10 w-auto object-contain object-left"
-              style={{ mixBlendMode: 'screen' }}
             />
             <span className="text-xs font-body text-white/25 mt-1">ИП Козлов Андрей Олегович</span>
           </div>

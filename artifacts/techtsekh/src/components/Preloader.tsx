@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LogoIcon } from './LogoMark';
+import markDark from '@assets/08-mark-dark_1_1778575188506.png';
 
 export default function Preloader() {
   const [isLoading, setIsLoading] = useState(true);
@@ -20,13 +20,19 @@ export default function Preloader() {
           className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-6"
           style={{ background: 'hsl(var(--bg-dark))' }}
         >
-          {/* Pure SVG mark — no PNG edges */}
+          {/* Logo mark — container bg matches the PNG navy background to hide any edge antialiasing */}
           <motion.div
             initial={{ scale: 0.7, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="rounded-[20px] overflow-hidden"
+            style={{ width: 80, height: 80, background: '#0B2B5E' }}
           >
-            <LogoIcon size={80} squareColor="rgba(255,255,255,0.9)" />
+            <img
+              src={markDark}
+              alt="ТЕХЦЕХ"
+              className="w-full h-full object-cover"
+            />
           </motion.div>
 
           {/* Wordmark */}
