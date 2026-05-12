@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import logoNobg from '@/assets/logo-light-nobg.png';
 
 const navLinks = [
@@ -16,31 +16,32 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const bgStyle: React.CSSProperties = scrolled
+    ? { background: 'rgba(245,247,250,0.94)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)' }
+    : {};
+
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ delay: 2.2, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+    <nav
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        scrolled ? 'border-b border-[hsl(var(--bg-secondary))]' : 'bg-transparent'
+        scrolled ? 'border-b border-[hsl(var(--bg-secondary))] shadow-sm' : 'bg-transparent'
       }`}
-      style={scrolled ? { background: 'rgba(245,247,250,0.92)', backdropFilter: 'blur(14px)' } : {}}
+      style={bgStyle}
     >
-      <div className="container mx-auto px-6 h-20 flex items-center justify-between">
+      <div className="container mx-auto px-6 h-16 md:h-20 flex items-center justify-between">
         <a href="#hero" data-testid="link-nav-logo" className="group">
           <img
             src={logoNobg}
             alt="ТЕХЦЕХ"
-            className="h-9 w-auto object-contain"
+            className="h-8 md:h-9 w-auto object-contain"
           />
         </a>
 
-        {/* Desktop */}
+        {/* Desktop links */}
         <div className="hidden md:flex items-center gap-8">
           <ul className="flex items-center gap-6">
             {navLinks.map((link) => (
@@ -71,20 +72,20 @@ export default function Navbar() {
           aria-label="Меню"
           data-testid="button-nav-mobile"
         >
-          <span className={`w-6 h-0.5 bg-[#0B2B5E] transition-all duration-300 ${mobileOpen ? 'rotate-45 translate-y-2' : ''}`} />
-          <span className={`w-6 h-0.5 bg-[#0B2B5E] transition-all duration-300 ${mobileOpen ? 'opacity-0' : ''}`} />
-          <span className={`w-6 h-0.5 bg-[#0B2B5E] transition-all duration-300 ${mobileOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+          <span className={`w-6 h-0.5 bg-[#0B2B5E] transition-all duration-300 origin-center ${mobileOpen ? 'rotate-45 translate-y-2' : ''}`} />
+          <span className={`w-6 h-0.5 bg-[#0B2B5E] transition-all duration-300 ${mobileOpen ? 'opacity-0 scale-x-0' : ''}`} />
+          <span className={`w-6 h-0.5 bg-[#0B2B5E] transition-all duration-300 origin-center ${mobileOpen ? '-rotate-45 -translate-y-2' : ''}`} />
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu panel */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.28, ease: 'easeInOut' }}
             className="md:hidden overflow-hidden border-t border-[hsl(var(--bg-secondary))]"
             style={{ background: 'rgba(245,247,250,0.97)', backdropFilter: 'blur(14px)' }}
           >
@@ -113,6 +114,6 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </nav>
   );
 }

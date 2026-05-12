@@ -26,7 +26,7 @@ function CircuitWow() {
 
   return (
     <svg
-      className="absolute inset-0 w-full h-full pointer-events-none"
+      className="absolute inset-0 w-full h-full pointer-events-none hidden lg:block"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 1280 800"
       preserveAspectRatio="xMidYMid slice"
