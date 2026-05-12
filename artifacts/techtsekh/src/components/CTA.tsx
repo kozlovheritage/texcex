@@ -1,0 +1,43 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+import { SiTelegram, SiWhatsapp } from 'react-icons/si';
+
+export default function CTA() {
+  return (
+    <section id="cta" className="py-32 bg-[hsl(var(--bg-dark))] noise-bg relative overflow-hidden">
+      <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none" style={{
+        backgroundImage: 'linear-gradient(rgba(255, 255, 255, 1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 1) 1px, transparent 1px)',
+        backgroundSize: '30px 30px'
+      }} />
+
+      <div className="container mx-auto px-6 relative z-10 text-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="max-w-3xl mx-auto"
+        >
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-white leading-tight mb-12">
+            Готовы превратить идею в работающий механизм?
+          </h2>
+          
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+            <button className="w-full sm:w-auto px-10 py-5 bg-[hsl(var(--accent-warm))] text-[#161A22] text-lg font-bold rounded hover:bg-[#A3823D] transition-colors shadow-lg shadow-[hsl(var(--accent-warm))/20]">
+              Обсудить проект
+            </button>
+            
+            <div className="flex items-center gap-4">
+              <a href="#" className="w-14 h-14 rounded-full border border-[hsl(var(--accent-warm))] flex items-center justify-center text-[hsl(var(--accent-warm))] hover:bg-[hsl(var(--accent-warm))] hover:text-[#161A22] transition-colors">
+                <SiTelegram className="w-6 h-6" />
+              </a>
+              <a href="#" className="w-14 h-14 rounded-full border border-[hsl(var(--accent-warm))] flex items-center justify-center text-[hsl(var(--accent-warm))] hover:bg-[hsl(var(--accent-warm))] hover:text-[#161A22] transition-colors">
+                <SiWhatsapp className="w-6 h-6" />
+              </a>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}

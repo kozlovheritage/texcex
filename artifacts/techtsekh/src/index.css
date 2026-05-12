@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@600;700&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: hsl(var(--bg-primary));
+  --color-foreground: hsl(var(--text-primary));
+  --color-border: hsl(var(--bg-secondary));
+
+  --color-primary: hsl(var(--accent-blue));
+  --color-primary-foreground: hsl(var(--text-light));
+  
+  --color-secondary: hsl(var(--accent-warm));
+  --color-secondary-foreground: hsl(var(--text-light));
+  
+  --color-muted: hsl(var(--bg-secondary));
+  --color-muted-foreground: hsl(var(--text-secondary));
+
+  --font-sans: var(--font-body);
+  --font-serif: var(--font-heading);
+  --font-mono: var(--font-mono-stack);
+}
+
+:root {
+  /* Colors */
+  --bg-primary: 216 25% 97%; /* #F5F7FA */
+  --bg-secondary: 216 19% 90%; /* #E1E5EB */
+  --bg-dark: 220 21% 11%; /* #161A22 */
+  
+  --accent-blue: 215 51% 25%; /* #1F3A5F */
+  --accent-warm: 41 46% 51%; /* #B8964A */
+  
+  --text-primary: 220 15% 12%; /* #1A1D23 */
+  --text-secondary: 222 9% 39%; /* #5A5F6B */
+  --text-light: 0 0% 100%; /* #FFFFFF */
+  
+  --footer-bg: 225 21% 7%; /* #0F1117 */
+
+  /* Fonts */
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'IBM Plex Sans', sans-serif;
+  --font-mono-stack: 'JetBrains Mono', monospace;
+
+  /* Aliases for shadcn components */
+  --background: var(--bg-primary);
+  --foreground: var(--text-primary);
+  --border: var(--bg-secondary);
+  --input: var(--bg-secondary);
+  --ring: var(--accent-blue);
+  --radius: 0.5rem;
+  
+  --primary: var(--accent-blue);
+  --primary-foreground: var(--text-light);
+  --secondary: var(--bg-secondary);
+  --secondary-foreground: var(--text-primary);
+  --muted: var(--bg-secondary);
+  --muted-foreground: var(--text-secondary);
+  --accent: var(--accent-blue);
+  --accent-foreground: var(--text-light);
+  --destructive: 0 84% 60%;
+  --destructive-foreground: var(--text-light);
+  --card: 0 0% 100%;
+  --card-foreground: var(--text-primary);
+  --popover: 0 0% 100%;
+  --popover-foreground: var(--text-primary);
+}
+
+.dark {
+  --background: var(--bg-dark);
+  --foreground: var(--text-light);
+  --border: 220 10% 20%;
+  --card: var(--bg-dark);
+  --card-foreground: var(--text-light);
+  --popover: var(--bg-dark);
+  --popover-foreground: var(--text-light);
+  --muted: 220 10% 20%;
+  --muted-foreground: var(--text-secondary);
+}
+
+@layer base {
+  body {
+    @apply font-sans antialiased text-foreground bg-background;
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+  }
+  
+  .glass-card:hover {
+    border-color: hsl(var(--accent-blue));
+    box-shadow: 0 0 15px rgba(31, 58, 95, 0.1);
+    transform: translateY(-4px);
+  }
+
+  .glass-card-dark {
+    background: rgba(22, 26, 34, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+  }
+
+  .glass-card-dark:hover {
+    border-color: hsl(var(--accent-warm));
+    box-shadow: 0 0 15px rgba(184, 150, 74, 0.15);
+    transform: translateY(-4px);
+  }
+
+  .text-gradient {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .noise-bg {
+    position: relative;
+  }
+  .noise-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+}

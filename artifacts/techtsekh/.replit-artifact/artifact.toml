@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "ТЕХЦЕХ"
+version = "1.0.0"
+id = "artifacts/techtsekh"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21363
+
+[services.development]
+run = "pnpm --filter @workspace/techtsekh run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/techtsekh", "run", "build" ]
+publicDir = "artifacts/techtsekh/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21363"
+BASE_PATH = "/"
