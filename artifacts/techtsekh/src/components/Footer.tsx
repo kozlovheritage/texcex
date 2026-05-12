@@ -1,15 +1,7 @@
 import React from 'react';
 import { SiTelegram } from 'react-icons/si';
-import logoDark from '@assets/02-horizontal-dark_1_1778575163721.png';
-
-function MaxIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-5 h-5">
-      <rect width="24" height="24" rx="6" fill="#0068FF"/>
-      <path d="M5.5 16V8.5L9.25 13.5L12 8.5L14.75 13.5L18.5 8.5V16" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-    </svg>
-  );
-}
+import logoDarkNobg from '@/assets/logo-dark-nobg.png';
+import maxIconPng from '@assets/image_1778576107523.png';
 
 const legalLinks = [
   { label: 'Реквизиты', href: '#', title: '' },
@@ -23,11 +15,13 @@ const socials = [
     label: 'Telegram',
     href: '#',
     icon: <SiTelegram className="w-5 h-5" />,
+    isImg: false,
   },
   {
     label: 'Max',
     href: '#',
-    icon: <MaxIcon />,
+    img: maxIconPng,
+    isImg: true,
   },
   {
     label: 'Email',
@@ -37,18 +31,19 @@ const socials = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
       </svg>
     ),
+    isImg: false,
   },
 ];
 
 export default function Footer() {
   return (
-    <footer className="noise-bg relative border-t border-white/5" style={{ background: 'hsl(var(--footer-bg))' }}>
+    <footer className="relative border-t border-white/5" style={{ background: 'hsl(var(--footer-bg))' }}>
       <div className="container mx-auto px-6 py-12 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
           {/* Brand */}
           <div className="flex flex-col gap-3">
             <img
-              src={logoDark}
+              src={logoDarkNobg}
               alt="ТЕХЦЕХ"
               className="h-10 w-auto object-contain object-left"
             />
@@ -85,9 +80,14 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   aria-label={s.label}
                   data-testid={`link-social-${s.label.toLowerCase()}`}
-                  className="w-10 h-10 rounded-lg flex items-center justify-center text-[hsl(var(--accent-warm))] border border-[hsl(var(--accent-warm))]/20 hover:border-[hsl(var(--accent-warm))]/60 hover:bg-[hsl(var(--accent-warm))]/10 transition-all"
+                  className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden border border-[hsl(var(--accent-warm))]/20 hover:border-[hsl(var(--accent-warm))]/60 hover:scale-105 transition-all"
+                  style={s.isImg ? {} : { color: 'hsl(var(--accent-warm))' }}
                 >
-                  {s.icon}
+                  {s.isImg ? (
+                    <img src={(s as { img: string }).img} alt={s.label} className="w-full h-full object-cover" />
+                  ) : (
+                    s.icon
+                  )}
                 </a>
               ))}
             </div>

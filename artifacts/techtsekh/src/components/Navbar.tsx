@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import logoLight from '@assets/03-horizontal-nodesc-light_1_1778575163721.png';
+import logoNobg from '@/assets/logo-light-nobg.png';
 
 const navLinks = [
   { name: 'Для кого', href: '#for-whom' },
@@ -34,9 +34,9 @@ export default function Navbar() {
       <div className="container mx-auto px-6 h-20 flex items-center justify-between">
         <a href="#hero" data-testid="link-nav-logo" className="group">
           <img
-            src={logoLight}
+            src={logoNobg}
             alt="ТЕХЦЕХ"
-            className="h-10 w-auto object-contain"
+            className="h-9 w-auto object-contain"
           />
         </a>
 
@@ -48,7 +48,7 @@ export default function Navbar() {
                 <a
                   href={link.href}
                   data-testid={`link-nav-${link.name.toLowerCase()}`}
-                  className="text-sm font-medium text-[hsl(var(--text-secondary))] hover:text-[hsl(var(--accent-blue))] transition-colors relative after:absolute after:bottom-[-2px] after:left-0 after:w-0 after:h-[1px] after:bg-[hsl(var(--accent-warm))] after:transition-all hover:after:w-full"
+                  className="text-sm font-medium text-[hsl(var(--text-secondary))] hover:text-[#0B2B5E] transition-colors relative after:absolute after:bottom-[-2px] after:left-0 after:w-0 after:h-[1px] after:bg-[hsl(var(--accent-warm))] after:transition-all hover:after:w-full"
                 >
                   {link.name}
                 </a>

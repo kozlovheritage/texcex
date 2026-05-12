@@ -7,8 +7,23 @@ const stats = [
   { value: '24/7', label: 'Поддержка' },
 ];
 
-/* Subtle animated circuit traces — right half only, 3 traces max */
+/*
+  Circuit animation — traces running through the right-side cards area.
+  3 base layers of traces at different opacities + 5 animated pulses
+  with random-feeling delays and durations to look organic.
+*/
 function CircuitWow() {
+  const pulses = [
+    /* path, dasharray, duration, delay, strokeWidth */
+    { d: 'M640,160 L780,160 L810,190 L1020,190 L1050,160 L1280,160', len: 700, dur: 5.2, delay: 0,    w: 1.5 },
+    { d: 'M1280,310 L1100,310 L1070,340 L820,340 L790,310 L640,310',  len: 700, dur: 7.1, delay: 1.8,  w: 1.5 },
+    { d: 'M640,480 L760,480 L790,450 L980,450 L1010,480 L1280,480',  len: 700, dur: 6.4, delay: 0.7,  w: 1.5 },
+    { d: 'M1020,190 L1020,450',                                        len: 280, dur: 4.3, delay: 2.9,  w: 1   },
+    { d: 'M810,310 L810,480',                                          len: 200, dur: 3.8, delay: 1.3,  w: 1   },
+    { d: 'M1280,420 L1150,420 L1120,390 L1020,390 L1020,450',         len: 300, dur: 5.8, delay: 3.5,  w: 1   },
+    { d: 'M640,230 L720,230 L750,260 L820,260 L820,340',              len: 280, dur: 6.9, delay: 0.4,  w: 1   },
+  ];
+
   return (
     <svg
       className="absolute inset-0 w-full h-full pointer-events-none"
@@ -17,72 +32,60 @@ function CircuitWow() {
       preserveAspectRatio="xMidYMid slice"
     >
       <defs>
-        <radialGradient id="heroGlow" cx="75%" cy="50%" r="35%">
-          <stop offset="0%" stopColor="#0B2B5E" stopOpacity="0.08" />
+        <radialGradient id="heroGlow2" cx="75%" cy="50%" r="38%">
+          <stop offset="0%" stopColor="#0B2B5E" stopOpacity="0.1" />
           <stop offset="100%" stopColor="#0B2B5E" stopOpacity="0" />
         </radialGradient>
       </defs>
 
-      {/* Subtle right-side glow */}
-      <ellipse
-        cx="960" cy="400" rx="340" ry="260"
-        fill="url(#heroGlow)"
-        className="glow-pulse"
-      />
+      {/* Ambient glow around the cards */}
+      <ellipse cx="960" cy="390" rx="360" ry="280" fill="url(#heroGlow2)" className="glow-pulse" />
 
-      {/* ── Static grid traces — right 55% of viewport only ── */}
-      <g opacity="0.07" stroke="#0B2B5E" strokeWidth="1" fill="none">
-        <path d="M680,180 L900,180 L930,210 L1280,210" />
-        <path d="M700,400 L850,400 L880,370 L1100,370 L1130,400 L1280,400" />
-        <path d="M750,600 L950,600 L980,570 L1280,570" />
-        <path d="M900,180 L900,570" />
-        <path d="M1100,210 L1100,570" />
-        <circle cx="900"  cy="180" r="3" fill="#0B2B5E" opacity="1" />
-        <circle cx="1100" cy="400" r="3" fill="#0B2B5E" opacity="1" />
-        <circle cx="900"  cy="570" r="3" fill="#0B2B5E" opacity="1" />
+      {/* ── Static background traces — right side, faint grid ── */}
+      <g opacity="0.08" stroke="#0B2B5E" strokeWidth="1" fill="none">
+        <path d="M640,160 L780,160 L810,190 L1020,190 L1050,160 L1280,160" />
+        <path d="M640,310 L790,310 L820,340 L1070,340 L1100,310 L1280,310" />
+        <path d="M640,480 L760,480 L790,450 L980,450 L1010,480 L1280,480" />
+        <path d="M1020,190 L1020,450" />
+        <path d="M810,190 L810,340" />
+        <path d="M640,230 L720,230 L750,260 L820,260" />
+        <path d="M1280,420 L1150,420 L1120,390 L1020,390" />
+        {/* Node dots */}
+        <circle cx="810"  cy="190" r="2.5" fill="#0B2B5E" />
+        <circle cx="1020" cy="190" r="2.5" fill="#0B2B5E" />
+        <circle cx="820"  cy="340" r="2.5" fill="#0B2B5E" />
+        <circle cx="1020" cy="450" r="2.5" fill="#0B2B5E" />
+        <circle cx="790"  cy="450" r="2.5" fill="#0B2B5E" />
+        <circle cx="810"  cy="310" r="2.5" fill="#0B2B5E" />
       </g>
 
-      {/* ── Animated copper pulses — 3 traces, right side only ── */}
-      {/* Pulse 1 — upper rail */}
-      <path
-        d="M650,180 L900,180 L930,210 L1300,210"
-        fill="none" stroke="#B8964A" strokeWidth="1.5" opacity="0"
-        style={{
-          strokeDasharray: 800,
-          strokeDashoffset: 800,
-          animation: 'traceLoop 6s linear infinite',
-          animationDelay: '0s',
-        }}
-      />
-      {/* Pulse 2 — mid rail */}
-      <path
-        d="M1300,400 L1130,400 L1100,370 L880,370 L850,400 L680,400"
-        fill="none" stroke="#B8964A" strokeWidth="1.5" opacity="0"
-        style={{
-          strokeDasharray: 800,
-          strokeDashoffset: 800,
-          animation: 'traceLoop 7.5s linear infinite',
-          animationDelay: '2.5s',
-        }}
-      />
-      {/* Pulse 3 — vertical connector */}
-      <path
-        d="M900,180 L900,570"
-        fill="none" stroke="#B8964A" strokeWidth="1" opacity="0"
-        style={{
-          strokeDasharray: 400,
-          strokeDashoffset: 400,
-          animation: 'traceLoop 5s linear infinite',
-          animationDelay: '1.2s',
-        }}
-      />
+      {/* ── Warm copper pulse animations ── */}
+      {pulses.map((p, i) => (
+        <path
+          key={i}
+          d={p.d}
+          fill="none"
+          stroke="#B8964A"
+          strokeWidth={p.w}
+          strokeLinecap="round"
+          opacity="0"
+          style={{
+            strokeDasharray: p.len,
+            strokeDashoffset: p.len,
+            animation: `traceLoop ${p.dur}s ${p.delay}s linear infinite`,
+          }}
+        />
+      ))}
 
-      {/* Connector node dots */}
-      <g fill="#B8964A" opacity="0.3">
-        <circle cx="930"  cy="210" r="4" />
-        <circle cx="1100" cy="370" r="4" />
-        <circle cx="880"  cy="370" r="4" />
-        <circle cx="900"  cy="570" r="4" />
+      {/* ── Copper connector nodes — always visible, subtle ── */}
+      <g fill="#B8964A" opacity="0.28">
+        <circle cx="810"  cy="190" r="3.5" />
+        <circle cx="1020" cy="190" r="3.5" />
+        <circle cx="820"  cy="340" r="3.5" />
+        <circle cx="1070" cy="340" r="3.5" />
+        <circle cx="790"  cy="450" r="3.5" />
+        <circle cx="1010" cy="480" r="3.5" />
+        <circle cx="1020" cy="390" r="3.5" />
       </g>
     </svg>
   );
@@ -103,7 +106,6 @@ export default function Hero() {
       id="hero"
       className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-[hsl(var(--bg-primary))]"
     >
-      {/* Circuit board — right side only */}
       <CircuitWow />
 
       <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-16 items-center">
