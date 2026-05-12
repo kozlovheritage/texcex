@@ -1,11 +1,12 @@
 import React from 'react';
 import { SiTelegram } from 'react-icons/si';
-import { LogoMark } from './LogoMark';
+import logoDark from '@assets/02-horizontal-dark_1_1778575163721.png';
 
 function MaxIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.5 7.5l-1.5 7-3-3-2 2-1-4.5 7.5-1.5z" />
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-5 h-5">
+      <rect width="24" height="24" rx="6" fill="#0068FF"/>
+      <path d="M5.5 16V8.5L9.25 13.5L12 8.5L14.75 13.5L18.5 8.5V16" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
     </svg>
   );
 }
@@ -46,9 +47,12 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
           {/* Brand */}
           <div className="flex flex-col gap-3">
-            <LogoMark variant="dark" size={32} textSize="text-2xl" />
-            <span className="text-sm font-body text-white/40 mt-1">Технический отдел для вашего бизнеса</span>
-            <span className="text-xs font-body text-white/25">ИП Козлов Андрей Олегович</span>
+            <img
+              src={logoDark}
+              alt="ТЕХЦЕХ"
+              className="h-10 w-auto object-contain object-left"
+            />
+            <span className="text-xs font-body text-white/25 mt-1">ИП Козлов Андрей Олегович</span>
           </div>
 
           {/* Legal links */}

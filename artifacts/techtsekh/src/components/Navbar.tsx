@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LogoMark } from './LogoMark';
+import logoLight from '@assets/03-horizontal-nodesc-light_1_1778575163721.png';
 
 const navLinks = [
   { name: 'Для кого', href: '#for-whom' },
@@ -29,11 +29,15 @@ export default function Navbar() {
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         scrolled ? 'border-b border-[hsl(var(--bg-secondary))]' : 'bg-transparent'
       }`}
-      style={scrolled ? { background: 'rgba(245,247,250,0.88)', backdropFilter: 'blur(14px)' } : {}}
+      style={scrolled ? { background: 'rgba(245,247,250,0.92)', backdropFilter: 'blur(14px)' } : {}}
     >
       <div className="container mx-auto px-6 h-20 flex items-center justify-between">
         <a href="#hero" data-testid="link-nav-logo" className="group">
-          <LogoMark variant="light" size={34} textSize="text-xl" />
+          <img
+            src={logoLight}
+            alt="ТЕХЦЕХ"
+            className="h-10 w-auto object-contain"
+          />
         </a>
 
         {/* Desktop */}
@@ -54,7 +58,7 @@ export default function Navbar() {
           <a
             href="#cta"
             data-testid="button-nav-cta"
-            className="px-5 py-2.5 bg-[hsl(var(--accent-blue))] text-white text-sm font-medium rounded hover:bg-[#2B4F7F] transition-all hover:-translate-y-0.5 shadow-md shadow-[hsl(var(--accent-blue))]/20"
+            className="px-5 py-2.5 bg-[#0B2B5E] text-white text-sm font-medium rounded hover:bg-[hsl(var(--accent-blue))] transition-all hover:-translate-y-0.5 shadow-md shadow-[#0B2B5E]/20"
           >
             Рассчитать проект
           </a>
@@ -67,9 +71,9 @@ export default function Navbar() {
           aria-label="Меню"
           data-testid="button-nav-mobile"
         >
-          <span className={`w-6 h-0.5 bg-[hsl(var(--accent-blue))] transition-all duration-300 ${mobileOpen ? 'rotate-45 translate-y-2' : ''}`} />
-          <span className={`w-6 h-0.5 bg-[hsl(var(--accent-blue))] transition-all duration-300 ${mobileOpen ? 'opacity-0' : ''}`} />
-          <span className={`w-6 h-0.5 bg-[hsl(var(--accent-blue))] transition-all duration-300 ${mobileOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+          <span className={`w-6 h-0.5 bg-[#0B2B5E] transition-all duration-300 ${mobileOpen ? 'rotate-45 translate-y-2' : ''}`} />
+          <span className={`w-6 h-0.5 bg-[#0B2B5E] transition-all duration-300 ${mobileOpen ? 'opacity-0' : ''}`} />
+          <span className={`w-6 h-0.5 bg-[#0B2B5E] transition-all duration-300 ${mobileOpen ? '-rotate-45 -translate-y-2' : ''}`} />
         </button>
       </div>
 
@@ -93,7 +97,7 @@ export default function Navbar() {
                   initial={{ opacity: 0, x: -12 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.05 }}
-                  className="text-base font-medium text-[hsl(var(--text-primary))] hover:text-[hsl(var(--accent-blue))] transition-colors py-1"
+                  className="text-base font-medium text-[hsl(var(--text-primary))] hover:text-[#0B2B5E] transition-colors py-1"
                 >
                   {link.name}
                 </motion.a>
@@ -101,7 +105,7 @@ export default function Navbar() {
               <a
                 href="#cta"
                 onClick={() => setMobileOpen(false)}
-                className="mt-2 px-5 py-3 bg-[hsl(var(--accent-blue))] text-white text-sm font-medium rounded text-center hover:bg-[#2B4F7F] transition-colors"
+                className="mt-2 px-5 py-3 bg-[#0B2B5E] text-white text-sm font-medium rounded text-center hover:bg-[hsl(var(--accent-blue))] transition-colors"
               >
                 Рассчитать проект
               </a>

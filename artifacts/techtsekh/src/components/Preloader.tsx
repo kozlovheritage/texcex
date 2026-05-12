@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LogoIcon } from './LogoMark';
+import markDark from '@assets/08-mark-dark_1_1778575188506.png';
 
 export default function Preloader() {
   const [isLoading, setIsLoading] = useState(true);
@@ -20,13 +20,17 @@ export default function Preloader() {
           className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-6"
           style={{ background: 'hsl(var(--bg-dark))' }}
         >
-          {/* Animated logo assembly */}
+          {/* Mark from brand identity */}
           <motion.div
             initial={{ scale: 0.7, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           >
-            <LogoIcon size={80} squareColor="white" />
+            <img
+              src={markDark}
+              alt="ТЕХЦЕХ"
+              className="w-20 h-20 object-contain"
+            />
           </motion.div>
 
           {/* Wordmark */}
