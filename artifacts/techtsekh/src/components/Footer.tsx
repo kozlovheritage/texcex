@@ -1,5 +1,5 @@
 import React from 'react';
-import logoLight from '@/assets/logo-light-nobg.png';
+import logoDark from '@assets/02-horizontal-dark_1_1778578198116.png';
 
 const legalLinks = [
   { label: 'Реквизиты', href: '#' },
@@ -19,13 +19,16 @@ export default function Footer() {
     <footer className="relative border-t border-white/5" style={{ background: 'hsl(var(--footer-bg))' }}>
       <div className="container mx-auto px-6 py-12 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
-          {/* Brand — use screen blend mode so the dark PNG background disappears on dark footer */}
+
+          {/* Brand logo — dark horizontal PNG, rounded + soft border for contrast */}
           <div className="flex flex-col gap-3">
-            <img
-              src={logoLight}
-              alt="ТЕХЦЕХ"
-              className="h-10 w-auto object-contain object-left"
-            />
+            <div className="inline-block rounded-xl overflow-hidden border border-white/10 w-fit shadow-sm shadow-black/20">
+              <img
+                src={logoDark}
+                alt="ТЕХЦЕХ"
+                className="h-14 w-auto object-contain block"
+              />
+            </div>
             <span className="text-xs font-body text-white/25 mt-1">ИП Козлов Андрей Олегович</span>
           </div>
 

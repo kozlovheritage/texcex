@@ -1,14 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { SiTelegram } from 'react-icons/si';
-
-function MaxIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.5 7.5l-1.5 7-3-3-2 2-1-4.5 7.5-1.5z" />
-    </svg>
-  );
-}
 
 export default function CTA() {
   return (
@@ -34,38 +25,13 @@ export default function CTA() {
             Готовы превратить идею в работающий механизм?
           </h2>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <a
-              href="#"
-              data-testid="button-cta-main"
-              className="w-full sm:w-auto px-10 py-5 bg-[hsl(var(--accent-warm))] text-[hsl(var(--bg-dark))] text-lg font-bold rounded hover:bg-[#A3823D] transition-colors shadow-lg shadow-[hsl(var(--accent-warm))]/20"
-            >
-              Обсудить проект
-            </a>
-
-            <div className="flex items-center gap-4">
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Telegram"
-                data-testid="link-cta-telegram"
-                className="w-14 h-14 rounded-full border border-[hsl(var(--accent-warm))] flex items-center justify-center text-[hsl(var(--accent-warm))] hover:bg-[hsl(var(--accent-warm))] hover:text-[hsl(var(--bg-dark))] transition-colors"
-              >
-                <SiTelegram className="w-6 h-6" />
-              </a>
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Max"
-                data-testid="link-cta-max"
-                className="w-14 h-14 rounded-full border border-[hsl(var(--accent-warm))] flex items-center justify-center text-[hsl(var(--accent-warm))] hover:bg-[hsl(var(--accent-warm))] hover:text-[hsl(var(--bg-dark))] transition-colors"
-              >
-                <MaxIcon />
-              </a>
-            </div>
-          </div>
+          <a
+            href="#"
+            data-testid="button-cta-main"
+            className="inline-block px-10 py-5 bg-[hsl(var(--accent-warm))] text-[hsl(var(--bg-dark))] text-lg font-bold rounded hover:bg-[#A3823D] transition-colors shadow-lg shadow-[hsl(var(--accent-warm))]/20"
+          >
+            Обсудить проект
+          </a>
         </motion.div>
       </div>
     </section>
