@@ -2,10 +2,10 @@ import React from 'react';
 import markDark from '@assets/08-mark-dark_1_1778578589277.png';
 
 const legalLinks = [
-  { label: 'Реквизиты', href: '#' },
-  { label: 'ПОПД', href: '#' },
-  { label: 'Согласие на обработку ПД', href: '#' },
-  { label: 'Согласие на рассылку', href: '#' },
+  { label: 'Реквизиты', href: 'https://disk.yandex.ru/i/8Ldi12FLLLIbIw' },
+  { label: 'Политика обработки ПД', href: 'https://disk.yandex.ru/i/yUEhztVf86CFqg' },
+  { label: 'Согласие на обработку ПД', href: 'https://disk.yandex.ru/i/6iuDnhOtA-cG6Q' },
+  { label: 'Согласие на рассылку', href: 'https://disk.yandex.ru/i/o_enwA8-3fJC-w' },
 ];
 
 const contacts = [
