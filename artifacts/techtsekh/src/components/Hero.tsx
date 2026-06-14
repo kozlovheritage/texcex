@@ -148,7 +148,9 @@ export default function Hero() {
             className="flex flex-wrap gap-4"
           >
             <a
-              href="#cta"
+              href="https://t.me/andrey_aw"
+              target="_blank"
+              rel="noopener noreferrer"
               data-testid="button-hero-cta-primary"
               className="px-8 py-4 bg-[#0B2B5E] text-white font-medium rounded hover:bg-[hsl(var(--accent-blue))] transition-all hover:-translate-y-1 shadow-lg shadow-[#0B2B5E]/20"
             >

@@ -176,7 +176,9 @@ export default function Services() {
                 Опишите задачу — подберём оптимальный набор инструментов и рассчитаем стоимость за 24 часа.
               </p>
               <a
-                href="#cta"
+                href="https://t.me/andrey_aw"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-sm font-medium text-[hsl(var(--accent-blue))] border border-[hsl(var(--accent-blue))]/30 px-4 py-2 rounded hover:bg-[hsl(var(--accent-blue))] hover:text-white transition-all"
               >
                 Обсудить задачу

@@ -26,7 +26,9 @@ export default function CTA() {
           </h2>
 
           <a
-            href="#"
+            href="https://t.me/andrey_aw"
+            target="_blank"
+            rel="noopener noreferrer"
             data-testid="button-cta-main"
             className="inline-block px-10 py-5 bg-[hsl(var(--accent-warm))] text-[hsl(var(--bg-dark))] text-lg font-bold rounded hover:bg-[#A3823D] transition-colors shadow-lg shadow-[hsl(var(--accent-warm))]/20"
           >

@@ -9,9 +9,7 @@ const legalLinks = [
 ];
 
 const contacts = [
-  { label: 'Telegram', href: 'https://t.me/techtsekh' },
-  { label: 'MAX', href: 'https://max.ru/techtsekh' },
-  { label: 'info@techtsekh.ru', href: 'mailto:info@techtsekh.ru' },
+  { label: 'Telegram', href: 'https://t.me/andrey_aw' },
 ];
 
 export default function Footer() {
