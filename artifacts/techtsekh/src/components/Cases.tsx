@@ -53,7 +53,8 @@ const casesData: CaseItem[] = [
     status: 'done',
     metrics: '42.9%',
     metricLabel: 'CTR e-mail',
-    gradient: 'from-[#2A1F1F]/70 to-[#1A2236]/50',
+    metricFake: false,
+    gradient: 'from-[#1F3A5F]/70 to-[#1A2236]/50',
     tags: ['Сайт', 'Инфопродукт', 'Автоворонка', 'Онлайн-касса', 'E-mail'],
     description:
       'Два проекта одного эксперта — комплексная техническая упаковка под ключ. Для «Фабрики заготовок»: сайт, упаковка инфопродукта, автоворонка, онлайн-касса и e-mail рассылки с CTR до 42.9%. Для «Заготовок для здоровья»: полноценный сайт с нуля. Оба проекта запущены синхронно.',
@@ -71,7 +72,7 @@ const casesData: CaseItem[] = [
     metrics: '*₽860к*',
     metricLabel: 'запуск',
     metricFake: true,
-    gradient: 'from-[#1A2A1A]/70 to-[#1A2236]/50',
+    gradient: 'from-[#1F3A5F]/70 to-[#1A2236]/50',
     tags: ['Сайт', 'Автоворонка', 'Онлайн-касса'],
     description:
       'Разработали сайт для сообщества мам WOMOMS, собрали автоворонку с сегментацией аудитории и подключили онлайн-кассу. Запуск прошёл в срок без технических сбоев.',
@@ -83,14 +84,19 @@ const casesData: CaseItem[] = [
   },
   {
     id: 4,
-    client: 'RASKATOVA FIT',
-    status: 'wip',
-    metrics: '—',
-    metricLabel: 'В работе',
-    gradient: 'from-[#1A1A2A]/60 to-[#111122]/40',
-    tags: ['Сайт'],
-    description: 'Разработка сайта. Проект в активной фазе.',
-    details: [],
+    client: 'Раскатова Фит-Студия',
+    status: 'done',
+    metrics: '4',
+    metricLabel: 'сервиса',
+    gradient: 'from-[#1F3A5F]/70 to-[#1A2236]/50',
+    tags: ['Сайт', 'Онлайн-касса', 'Яндекс.Бизнес', 'Яндекс.Вебмастер'],
+    description:
+      'Разработали сайт для фитнес-студии, подключили онлайн-кассу по 54-ФЗ. Настроили Яндекс.Бизнес для появления в геосервисах и Яндекс.Вебмастер для контроля индексации и SEO-статуса.',
+    details: [
+      { label: 'Услуги', value: 'Сайт, онлайн-касса, Яндекс.Бизнес, Яндекс.Вебмастер' },
+      { label: 'Статус', value: 'Завершён' },
+      { label: 'Охват', value: 'Геосервисы + поиск' },
+    ],
   },
   {
     id: 5,
@@ -117,7 +123,7 @@ function FakeMark({ children }: { children: React.ReactNode }) {
 function MetricDisplay({ value, fake }: { value: string; fake?: boolean }) {
   const clean = value.replace(/\*/g, '');
   if (fake) return <FakeMark>{clean}</FakeMark>;
-  return <>{clean}</>;
+  return <span className="italic">{clean}</span>;
 }
 
 export default function Cases() {
