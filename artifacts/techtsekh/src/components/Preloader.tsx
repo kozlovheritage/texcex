@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import wallpaperDark from '@assets/14-wallpaper-desktop-dark_1_1778578328496.png';
+import wallpaperDark from '../assets/wallpaper-dark.png';
 
 export default function Preloader() {
   const [isLoading, setIsLoading] = useState(true);

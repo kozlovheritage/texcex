@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import squareLogo from '@assets/12-square-dark_1_1778577847798.png';
+import squareLogo from '../assets/square-dark.png';
 
 export default function About() {
   return (

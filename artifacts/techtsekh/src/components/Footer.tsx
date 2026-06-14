@@ -1,5 +1,5 @@
 import React from 'react';
-import markDark from '@assets/08-mark-dark_1_1778578589277.png';
+import markDark from '../assets/mark-dark.png';
 
 const legalLinks = [
   { label: 'Реквизиты', href: 'https://disk.yandex.ru/i/8Ldi12FLLLIbIw' },
