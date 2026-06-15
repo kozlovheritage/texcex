@@ -8,11 +8,27 @@ const MAILING_URL = 'https://disk.yandex.ru/i/o_enwA8-3fJC-w';
 
 type FormState = 'idle' | 'loading' | 'success' | 'error';
 
+function formatPhone(digits: string): string {
+  const d = digits.slice(0, 10);
+  let result = '+7';
+  if (d.length === 0) return result;
+  result += ' (' + d.slice(0, 3);
+  if (d.length < 3) return result;
+  result += ')';
+  if (d.length === 3) return result;
+  result += ' ' + d.slice(3, 6);
+  if (d.length < 6) return result;
+  result += '-' + d.slice(6, 8);
+  if (d.length < 8) return result;
+  result += '-' + d.slice(8, 10);
+  return result;
+}
+
 export default function ContactModal() {
   const { isOpen, closeModal } = useContactModal();
 
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState('+7 ');
+  const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [telegram, setTelegram] = useState('');
   const [consentPd, setConsentPd] = useState(false);
@@ -20,10 +36,18 @@ export default function ContactModal() {
   const [formState, setFormState] = useState<FormState>('idle');
   const [errorMsg, setErrorMsg] = useState('');
 
-  const phoneDigits = phone.replace(/\D/g, '');
-  const phoneValid = phoneDigits.length >= 11;
+  const [nameTouched, setNameTouched] = useState(false);
+  const [phoneTouched, setPhoneTouched] = useState(false);
+
+  const phoneDigits = phone.replace(/\D/g, '').replace(/^7/, '');
+  const phoneValid = phoneDigits.length === 10;
+  const nameValid = name.trim().length > 0;
+
+  const nameError = nameTouched && !nameValid ? 'Пожалуйста, введите ваше имя' : '';
+  const phoneError = phoneTouched && !phoneValid ? 'Введите номер полностью: +7 (XXX) XXX-XX-XX' : '';
+
   const canSubmit =
-    name.trim().length > 0 &&
+    nameValid &&
     phoneValid &&
     consentPd &&
     consentMailing &&
@@ -31,24 +55,49 @@ export default function ContactModal() {
 
   function handlePhoneChange(e: React.ChangeEvent<HTMLInputElement>) {
     const raw = e.target.value;
-    const prefix = '+7 ';
-    if (!raw.startsWith('+7')) {
-      setPhone(prefix);
-      return;
+    let digits = raw.replace(/\D/g, '');
+    if (digits.startsWith('7')) digits = digits.slice(1);
+    if (digits.startsWith('8')) digits = digits.slice(1);
+    setPhone(formatPhone(digits));
+  }
+
+  function handlePhoneKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'Backspace') {
+      const digits = phoneDigits;
+      if (digits.length === 0) return;
+      const newDigits = digits.slice(0, -1);
+      setPhone(newDigits.length > 0 ? formatPhone(newDigits) : '');
     }
-    const rest = raw.slice(2).replace(/\D/g, '');
-    setPhone('+7 ' + rest);
+  }
+
+  function handlePhoneFocus(e: React.FocusEvent<HTMLInputElement>) {
+    if (!phone) {
+      setPhone('+7 (');
+    }
+    setTimeout(() => {
+      const len = e.target.value.length;
+      e.target.setSelectionRange(len, len);
+    }, 0);
+  }
+
+  function handlePhoneBlur() {
+    setPhoneTouched(true);
+    if (phone === '+7 (' || phone === '+7') {
+      setPhone('');
+    }
   }
 
   function resetForm() {
     setName('');
-    setPhone('+7 ');
+    setPhone('');
     setEmail('');
     setTelegram('');
     setConsentPd(false);
     setConsentMailing(false);
     setFormState('idle');
     setErrorMsg('');
+    setNameTouched(false);
+    setPhoneTouched(false);
   }
 
   function handleOpenChange(open: boolean) {
@@ -72,11 +121,13 @@ export default function ContactModal() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    setNameTouched(true);
+    setPhoneTouched(true);
     if (!canSubmit) return;
     setFormState('loading');
     setErrorMsg('');
     try {
-      const res = await fetch('/api/leads', {
+      const res = await fetch('https://techtsekh.replit.app/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -93,6 +144,13 @@ export default function ContactModal() {
       setErrorMsg('Не удалось отправить заявку. Попробуйте снова или напишите нам в Telegram.');
     }
   }
+
+  const inputBase =
+    'w-full rounded-lg border bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/30 font-body transition-colors focus:outline-none focus:ring-1';
+  const inputNormal =
+    'border-white/15 focus:border-[hsl(var(--accent-warm))]/60 focus:ring-[hsl(var(--accent-warm))]/30';
+  const inputError =
+    'border-red-500/70 focus:border-red-500 focus:ring-red-500/30';
 
   return (
     <DialogPrimitive.Root open={isOpen} onOpenChange={handleOpenChange}>
@@ -147,8 +205,12 @@ export default function ContactModal() {
                     placeholder="Как вас зовут?"
                     value={name}
                     onChange={e => setName(e.target.value)}
-                    className="w-full rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/30 font-body transition-colors focus:border-[hsl(var(--accent-warm))]/60 focus:outline-none focus:ring-1 focus:ring-[hsl(var(--accent-warm))]/30"
+                    onBlur={() => setNameTouched(true)}
+                    className={`${inputBase} ${nameError ? inputError : inputNormal}`}
                   />
+                  {nameError && (
+                    <p className="mt-1.5 text-xs text-red-400 font-body">{nameError}</p>
+                  )}
                 </div>
 
                 {/* Phone */}
@@ -160,14 +222,21 @@ export default function ContactModal() {
                     type="tel"
                     required
                     autoComplete="tel"
-                    placeholder="+7 9XXXXXXXXX"
+                    placeholder="+7 (900) 123-45-67"
                     value={phone}
                     onChange={handlePhoneChange}
-                    className="w-full rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/30 font-body transition-colors focus:border-[hsl(var(--accent-warm))]/60 focus:outline-none focus:ring-1 focus:ring-[hsl(var(--accent-warm))]/30"
+                    onKeyDown={handlePhoneKeyDown}
+                    onFocus={handlePhoneFocus}
+                    onBlur={handlePhoneBlur}
+                    className={`${inputBase} ${phoneError ? inputError : inputNormal}`}
                   />
-                  <p className="mt-1.5 text-xs text-white/35 font-body">
-                    Желательно номер, к которому привязан MAX
-                  </p>
+                  {phoneError ? (
+                    <p className="mt-1.5 text-xs text-red-400 font-body">{phoneError}</p>
+                  ) : (
+                    <p className="mt-1.5 text-xs text-white/35 font-body">
+                      Желательно номер, к которому привязан MAX
+                    </p>
+                  )}
                 </div>
 
                 {/* Email */}
@@ -182,7 +251,7 @@ export default function ContactModal() {
                     placeholder="your@email.ru"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
-                    className="w-full rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/30 font-body transition-colors focus:border-[hsl(var(--accent-warm))]/60 focus:outline-none focus:ring-1 focus:ring-[hsl(var(--accent-warm))]/30"
+                    className={`${inputBase} ${inputNormal}`}
                   />
                 </div>
 
@@ -198,7 +267,7 @@ export default function ContactModal() {
                     placeholder="@username"
                     value={telegram}
                     onChange={e => setTelegram(e.target.value)}
-                    className="w-full rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/30 font-body transition-colors focus:border-[hsl(var(--accent-warm))]/60 focus:outline-none focus:ring-1 focus:ring-[hsl(var(--accent-warm))]/30"
+                    className={`${inputBase} ${inputNormal}`}
                   />
                 </div>
 
