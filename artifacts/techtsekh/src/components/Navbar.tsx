@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import logoNobg from '@/assets/logo-light-nobg.png';
+import { useContactModal } from '@/hooks/use-contact-modal';
 
 const navLinks = [
   { name: 'Для кого', href: '#for-whom' },
@@ -14,6 +15,7 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { openModal } = useContactModal();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -56,13 +58,13 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
-          <a
-            href="#cta"
+          <button
+            onClick={openModal}
             data-testid="button-nav-cta"
-            className="px-5 py-2.5 bg-[#0B2B5E] text-white text-sm font-medium rounded hover:bg-[hsl(var(--accent-blue))] transition-all hover:-translate-y-0.5 shadow-md shadow-[#0B2B5E]/20"
+            className="px-5 py-2.5 bg-[#0B2B5E] text-white text-sm font-medium rounded hover:bg-[hsl(var(--accent-blue))] transition-all hover:-translate-y-0.5 shadow-md shadow-[#0B2B5E]/20 cursor-pointer"
           >
             Рассчитать проект
-          </a>
+          </button>
         </div>
 
         {/* Mobile burger */}
@@ -103,13 +105,13 @@ export default function Navbar() {
                   {link.name}
                 </motion.a>
               ))}
-              <a
-                href="#cta"
-                onClick={() => setMobileOpen(false)}
-                className="mt-2 px-5 py-3 bg-[#0B2B5E] text-white text-sm font-medium rounded text-center hover:bg-[hsl(var(--accent-blue))] transition-colors"
+              <button
+                onClick={() => { setMobileOpen(false); openModal(); }}
+                data-testid="button-nav-mobile-cta"
+                className="mt-2 px-5 py-3 bg-[#0B2B5E] text-white text-sm font-medium rounded text-center hover:bg-[hsl(var(--accent-blue))] transition-colors cursor-pointer w-full"
               >
                 Рассчитать проект
-              </a>
+              </button>
             </div>
           </motion.div>
         )}

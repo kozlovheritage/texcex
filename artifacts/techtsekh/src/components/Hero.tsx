@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useContactModal } from '@/hooks/use-contact-modal';
 
 const stats = [
   { value: '150+', label: 'Проектов запущено' },
@@ -7,14 +8,8 @@ const stats = [
   { value: '24/7', label: 'Поддержка' },
 ];
 
-/*
-  Circuit animation — traces running through the right-side cards area.
-  3 base layers of traces at different opacities + 5 animated pulses
-  with random-feeling delays and durations to look organic.
-*/
 function CircuitWow() {
   const pulses = [
-    /* path, dasharray, duration, delay, strokeWidth */
     { d: 'M640,160 L780,160 L810,190 L1020,190 L1050,160 L1280,160', len: 700, dur: 5.2, delay: 0,    w: 1.5 },
     { d: 'M1280,310 L1100,310 L1070,340 L820,340 L790,310 L640,310',  len: 700, dur: 7.1, delay: 1.8,  w: 1.5 },
     { d: 'M640,480 L760,480 L790,450 L980,450 L1010,480 L1280,480',  len: 700, dur: 6.4, delay: 0.7,  w: 1.5 },
@@ -37,11 +32,7 @@ function CircuitWow() {
           <stop offset="100%" stopColor="#0B2B5E" stopOpacity="0" />
         </radialGradient>
       </defs>
-
-      {/* Ambient glow around the cards */}
       <ellipse cx="960" cy="390" rx="360" ry="280" fill="url(#heroGlow2)" className="glow-pulse" />
-
-      {/* ── Static background traces — right side, faint grid ── */}
       <g opacity="0.08" stroke="#0B2B5E" strokeWidth="1" fill="none">
         <path d="M640,160 L780,160 L810,190 L1020,190 L1050,160 L1280,160" />
         <path d="M640,310 L790,310 L820,340 L1070,340 L1100,310 L1280,310" />
@@ -50,7 +41,6 @@ function CircuitWow() {
         <path d="M810,190 L810,340" />
         <path d="M640,230 L720,230 L750,260 L820,260" />
         <path d="M1280,420 L1150,420 L1120,390 L1020,390" />
-        {/* Node dots */}
         <circle cx="810"  cy="190" r="2.5" fill="#0B2B5E" />
         <circle cx="1020" cy="190" r="2.5" fill="#0B2B5E" />
         <circle cx="820"  cy="340" r="2.5" fill="#0B2B5E" />
@@ -58,8 +48,6 @@ function CircuitWow() {
         <circle cx="790"  cy="450" r="2.5" fill="#0B2B5E" />
         <circle cx="810"  cy="310" r="2.5" fill="#0B2B5E" />
       </g>
-
-      {/* ── Warm copper pulse animations ── */}
       {pulses.map((p, i) => (
         <path
           key={i}
@@ -76,8 +64,6 @@ function CircuitWow() {
           }}
         />
       ))}
-
-      {/* ── Copper connector nodes — always visible, subtle ── */}
       <g fill="#B8964A" opacity="0.28">
         <circle cx="810"  cy="190" r="3.5" />
         <circle cx="1020" cy="190" r="3.5" />
@@ -101,6 +87,8 @@ const cardVariants = {
 };
 
 export default function Hero() {
+  const { openModal } = useContactModal();
+
   return (
     <section
       id="hero"
@@ -109,7 +97,6 @@ export default function Hero() {
       <CircuitWow />
 
       <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-16 items-center">
-        {/* Left: copy */}
         <div>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
@@ -147,15 +134,13 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 2.75 }}
             className="flex flex-wrap gap-4"
           >
-            <a
-              href="https://t.me/andrey_aw"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={openModal}
               data-testid="button-hero-cta-primary"
-              className="px-8 py-4 bg-[#0B2B5E] text-white font-medium rounded hover:bg-[hsl(var(--accent-blue))] transition-all hover:-translate-y-1 shadow-lg shadow-[#0B2B5E]/20"
+              className="px-8 py-4 bg-[#0B2B5E] text-white font-medium rounded hover:bg-[hsl(var(--accent-blue))] transition-all hover:-translate-y-1 shadow-lg shadow-[#0B2B5E]/20 cursor-pointer"
             >
               Рассчитать проект
-            </a>
+            </button>
             <a
               href="#cases"
               data-testid="button-hero-cta-secondary"
@@ -166,7 +151,6 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* Right: floating cards */}
         <div className="hidden lg:flex flex-col gap-5">
           <motion.div
             custom={0}

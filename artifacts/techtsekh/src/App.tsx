@@ -16,6 +16,8 @@ import About from "./components/About";
 import Faq from "./components/Faq";
 import CTA from "./components/CTA";
 import Footer from "./components/Footer";
+import ContactModal from "./components/ContactModal";
+import { ContactModalProvider } from "./hooks/use-contact-modal";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +37,7 @@ function LandingPage() {
         <CTA />
       </main>
       <Footer />
+      <ContactModal />
     </div>
   );
 }
@@ -52,10 +55,12 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <Router />
-        </WouterRouter>
-        <Toaster />
+        <ContactModalProvider>
+          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+            <Router />
+          </WouterRouter>
+          <Toaster />
+        </ContactModalProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );

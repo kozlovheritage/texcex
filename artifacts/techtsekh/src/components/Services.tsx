@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Monitor } from 'lucide-react';
+import { useContactModal } from '@/hooks/use-contact-modal';
 
 const services = [
   {
@@ -52,6 +53,7 @@ const services = [
 ];
 
 export default function Services() {
+  const { openModal } = useContactModal();
   return (
     <section id="services" className="py-24 bg-[hsl(var(--bg-secondary))]">
       <div className="container mx-auto px-6">
@@ -175,14 +177,13 @@ export default function Services() {
               <p className="text-sm text-[hsl(var(--text-secondary))] font-body leading-relaxed mb-5">
                 Опишите задачу — подберём оптимальный набор инструментов и рассчитаем стоимость за 24 часа.
               </p>
-              <a
-                href="https://t.me/andrey_aw"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm font-medium text-[hsl(var(--accent-blue))] border border-[hsl(var(--accent-blue))]/30 px-4 py-2 rounded hover:bg-[hsl(var(--accent-blue))] hover:text-white transition-all"
+              <button
+                onClick={openModal}
+                data-testid="button-services-cta"
+                className="text-sm font-medium text-[hsl(var(--accent-blue))] border border-[hsl(var(--accent-blue))]/30 px-4 py-2 rounded hover:bg-[hsl(var(--accent-blue))] hover:text-white transition-all cursor-pointer"
               >
                 Обсудить задачу
-              </a>
+              </button>
             </motion.div>
           </div>
         </div>

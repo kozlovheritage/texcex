@@ -1,7 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useContactModal } from '@/hooks/use-contact-modal';
 
 export default function CTA() {
+  const { openModal } = useContactModal();
+
   return (
     <section id="cta" className="py-32 bg-[hsl(var(--bg-dark))] noise-bg relative overflow-hidden">
       <div
@@ -25,15 +28,13 @@ export default function CTA() {
             Готовы превратить идею в работающий механизм?
           </h2>
 
-          <a
-            href="https://t.me/andrey_aw"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={openModal}
             data-testid="button-cta-main"
-            className="inline-block px-10 py-5 bg-[hsl(var(--accent-warm))] text-[hsl(var(--bg-dark))] text-lg font-bold rounded hover:bg-[#A3823D] transition-colors shadow-lg shadow-[hsl(var(--accent-warm))]/20"
+            className="inline-block px-10 py-5 bg-[hsl(var(--accent-warm))] text-[hsl(var(--bg-dark))] text-lg font-bold rounded hover:bg-[#A3823D] transition-colors shadow-lg shadow-[hsl(var(--accent-warm))]/20 cursor-pointer"
           >
             Обсудить проект
-          </a>
+          </button>
         </motion.div>
       </div>
     </section>
