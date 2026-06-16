@@ -31,6 +31,7 @@ export default function ContactModal() {
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [telegram, setTelegram] = useState('');
+  const [comment, setComment] = useState('');
   const [consentPd, setConsentPd] = useState(false);
   const [consentMailing, setConsentMailing] = useState(false);
   const [formState, setFormState] = useState<FormState>('idle');
@@ -92,6 +93,7 @@ export default function ContactModal() {
     setPhone('');
     setEmail('');
     setTelegram('');
+    setComment('');
     setConsentPd(false);
     setConsentMailing(false);
     setFormState('idle');
@@ -135,6 +137,7 @@ export default function ContactModal() {
           phone: phone.trim(),
           email: email.trim() || undefined,
           telegram: telegram.trim() || undefined,
+          comment: comment.trim() || undefined,
         }),
       });
       if (!res.ok) throw new Error('server');
@@ -268,6 +271,22 @@ export default function ContactModal() {
                     value={telegram}
                     onChange={e => setTelegram(e.target.value)}
                     className={`${inputBase} ${inputNormal}`}
+                  />
+                </div>
+
+                {/* Comment */}
+                <div>
+                  <label className="block text-sm font-body text-white/70 mb-1.5">
+                    Комментарий{' '}
+                    <span className="text-white/30 text-xs">(необязательно)</span>
+                  </label>
+                  <textarea
+                    rows={3}
+                    autoComplete="off"
+                    placeholder="Уточните услугу, задачу или вопрос — это поможет нам подготовиться к разговору"
+                    value={comment}
+                    onChange={e => setComment(e.target.value)}
+                    className="w-full rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/30 font-body transition-colors focus:border-[hsl(var(--accent-warm))]/60 focus:outline-none focus:ring-1 focus:ring-[hsl(var(--accent-warm))]/30 resize-none"
                   />
                 </div>
 

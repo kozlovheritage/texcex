@@ -1,4 +1,5 @@
 import { Router, type IRouter } from "express";
+import type { Logger } from "pino";
 
 const router: IRouter = Router();
 
@@ -7,12 +8,16 @@ interface Lead {
   phone: string;
   email?: string;
   telegram?: string;
+  comment?: string;
 }
 
-async function notifyTelegram(lead: Lead): Promise<void> {
+async function notifyTelegram(lead: Lead, log: Logger): Promise<void> {
   const token = process.env["TELEGRAM_BOT_TOKEN"];
   const chatId = process.env["TELEGRAM_CHAT_ID"];
-  if (!token || !chatId) return;
+  if (!token || !chatId) {
+    log.warn("TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set — skipping Telegram notification");
+    return;
+  }
 
   const lines = [
     "🔔 <b>Новая заявка с сайта ТЕХЦЕХ</b>",
@@ -22,16 +27,44 @@ async function notifyTelegram(lead: Lead): Promise<void> {
   ];
   if (lead.email) lines.push(`📧 <b>Email:</b> ${lead.email}`);
   if (lead.telegram) lines.push(`💬 <b>Telegram:</b> ${lead.telegram}`);
+  if (lead.comment) lines.push(`\n💬 <b>Комментарий:</b> ${lead.comment}`);
 
-  await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ chat_id: chatId, text: lines.join("\n"), parse_mode: "HTML" }),
-  });
+  async function send(cid: string): Promise<Response> {
+    return fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: cid, text: lines.join("\n"), parse_mode: "HTML" }),
+    });
+  }
+
+  let res = await send(chatId);
+
+  if (!res.ok) {
+    const body = await res.text().catch(() => "(unreadable)");
+    type TgError = { parameters?: { migrate_to_chat_id?: number } };
+    let parsed: TgError = {};
+    try { parsed = JSON.parse(body) as TgError; } catch { /* ignore */ }
+
+    const migratedId = parsed.parameters?.migrate_to_chat_id;
+    if (migratedId) {
+      const newChatId = String(migratedId);
+      log.info({ oldChatId: chatId, newChatId }, "Group migrated to supergroup, retrying");
+      res = await send(newChatId);
+      if (!res.ok) {
+        const retryBody = await res.text().catch(() => "(unreadable)");
+        throw new Error(`Telegram API error ${res.status} (after migration): ${retryBody}`);
+      }
+      log.info({ chatId: newChatId }, "Telegram notification sent");
+    } else {
+      throw new Error(`Telegram API error ${res.status}: ${body}`);
+    }
+  } else {
+    log.info({ chatId }, "Telegram notification sent");
+  }
 }
 
 router.post("/leads", async (req, res) => {
-  const { name, phone, email, telegram } = req.body as Record<string, unknown>;
+  const { name, phone, email, telegram, comment } = req.body as Record<string, unknown>;
 
   if (!name || typeof name !== "string" || name.trim().length === 0) {
     res.status(400).json({ error: "name is required" });
@@ -47,12 +80,13 @@ router.post("/leads", async (req, res) => {
     phone: (phone as string).trim(),
     email: typeof email === "string" && email.trim() ? email.trim() : undefined,
     telegram: typeof telegram === "string" && telegram.trim() ? telegram.trim() : undefined,
+    comment: typeof comment === "string" && comment.trim() ? comment.trim() : undefined,
   };
 
   req.log.info({ lead }, "New lead received");
 
-  notifyTelegram(lead).catch((err) => {
-    req.log.warn({ err }, "Failed to send Telegram notification");
+  notifyTelegram(lead, req.log).catch((err: unknown) => {
+    req.log.error({ err }, "Failed to send Telegram notification");
   });
 
   res.json({ ok: true });
