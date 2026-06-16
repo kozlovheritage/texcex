@@ -229,7 +229,7 @@ export default function Cases() {
           transition={{ duration: 0.6 }}
           className="mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-heading font-bold text-white">Наши работы</h2>
+          <h2 className="text-4xl md:text-5xl font-heading font-bold text-white">Наши проекты</h2>
         </motion.div>
 
         {/* Первые три завершённых кейса */}
