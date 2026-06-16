@@ -112,16 +112,31 @@ const casesData: CaseItem[] = [
     description: 'Разработка собственного сайта и ИИ-ассистента для автоматизации входящих обращений.',
     details: [],
   },
+  {
+    id: 6,
+    client: 'NDA',
+    project: 'Автоматизация тендерной аналитики',
+    status: 'done',
+    metrics: '×11',
+    metricLabel: 'ускорение анализа',
+    gradient: 'from-[#2A1A4A]/70 to-[#1A2236]/50',
+    tags: ['Автоматизация', 'Python', 'DeepSeek AI', '44-ФЗ', '223-ФЗ'],
+    description:
+      'Разработали Python-скрипт, который автоматически скачивает документацию тендеров с zakupki.gov.ru, анализирует её через ИИ по 12 стоп-факторам и выдаёт готовые Word-отчёты с рекомендацией — участвовать или нет.',
+    details: [
+      { label: 'Услуги', value: 'Python-скрипт, DeepSeek AI, Serper API, Word/Excel-отчёты' },
+      { label: 'Статус', value: 'Завершён' },
+      { label: 'Результат', value: '100 тендеров / 42 мин вместо 8 ч' },
+    ],
+  },
 ];
 
 export default function Cases() {
   const [selectedCase, setSelectedCase] = useState<CaseItem | null>(null);
 
-  const firstDone = casesData.filter((c) => c.status === 'done').slice(0, 3);
-  const lastRow   = [
-    casesData.find((c) => c.id === 4)!,
-    ...casesData.filter((c) => c.status === 'wip'),
-  ];
+  const firstDone  = casesData.filter((c) => c.status === 'done').slice(0, 3);
+  const middleRow  = [casesData.find((c) => c.id === 4)!, casesData.find((c) => c.id === 6)!];
+  const wipCases   = casesData.filter((c) => c.status === 'wip');
 
   const renderMetricBanner = (item: CaseItem, large = false) => {
     const clean = item.metrics.replace(/\*/g, '');
@@ -222,13 +237,14 @@ export default function Cases() {
           {firstDone.map((item, index) => renderDoneCard(item, index))}
         </div>
 
-        {/* Раскатова + В работе — в одну строку */}
-        <div className="grid md:grid-cols-2 gap-6">
-          {/* Раскатова — полноценная карточка */}
-          {renderDoneCard(lastRow[0], 0)}
+        {/* Раскатова + тендерная аналитика */}
+        <div className="grid md:grid-cols-2 gap-6 mb-6">
+          {middleRow.map((item, index) => renderDoneCard(item, index))}
+        </div>
 
-          {/* WIP карточки */}
-          {lastRow.slice(1).map((item, index) => (
+        {/* В работе */}
+        <div className="grid md:grid-cols-2 gap-6">
+          {wipCases.map((item, index) => (
             <motion.div
               key={item.id}
               initial={{ opacity: 0, y: 16 }}
