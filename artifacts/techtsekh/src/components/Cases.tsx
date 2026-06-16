@@ -89,7 +89,7 @@ const casesData: CaseItem[] = [
     status: 'done',
     metrics: 'Упаковка под ключ',
     metricIsText: true,
-    metricLabel: '',
+    metricLabel: 'B2B',
     gradient: 'from-[#1F3A5F]/70 to-[#1A2236]/50',
     tags: ['Сайт', 'Онлайн-касса', 'Яндекс.Бизнес', 'Яндекс.Вебмастер'],
     description:
