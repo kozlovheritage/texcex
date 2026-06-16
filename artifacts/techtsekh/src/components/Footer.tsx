@@ -9,8 +9,7 @@ const legalLinks = [
 ];
 
 const contacts = [
-  { label: 'Telegram', href: 'https://t.me/andrey_aw' },
-  { label: 'Канал ТЕХЦЕХ', href: 'https://t.me/texcex' },
+  { label: 'Telegram', href: 'https://t.me/texcex' },
 ];
 
 export default function Footer() {
