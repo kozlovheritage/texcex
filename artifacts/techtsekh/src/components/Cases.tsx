@@ -52,7 +52,7 @@ const casesData: CaseItem[] = [
     client: 'Вера Малыгина',
     project: 'Фабрика заготовок',
     status: 'done',
-    metrics: '~6 млн рублей',
+    metrics: '~₽6 млн',
     metricLabel: 'на первом боевом запуске платформы',
     gradient: 'from-[#1F3A5F]/70 to-[#1A2236]/50',
     tags: ['Цифровой продукт', 'Клуб', 'Мини-LMS', 'Библиотека материалов'],
